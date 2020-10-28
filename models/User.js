@@ -18,11 +18,11 @@ const UserSchema = mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-  //   ImageUrl: {
-  //       type: String,
-  //       require: true,
-  //       unique: true
-  //   }
+  avatar: {
+    type: String,
+    require: true,
+    unique: true,
+  },
 });
 
 module.exports = mongoose.model('user', UserSchema);

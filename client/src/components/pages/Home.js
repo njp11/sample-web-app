@@ -12,16 +12,13 @@ const Home = () => {
   return (
     <>
       <div className="welcome">
-        <h2>Welcome back!</h2>
+        <h2>Welcome! {user && user.name}</h2>
       </div>
-      <div className="card">
-        <div className="card-container">
-          <h2>
-            <b>{user && user.name}</b>
-          </h2>
+      {user && (
+        <div className="card">
+          <img src={user && user.avatar} alt="Avatar" />
         </div>
-        <img src={user && user.avatar} alt="Avatar" />
-      </div>
+      )}
     </>
   );
 };

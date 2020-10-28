@@ -32,12 +32,20 @@ const Register = (props) => {
     // eslint-disable-next-line
   }, [error, isAuthenticated, props.history]);
 
-  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+  const onChange = (e) => {
+    if (e.target.name === 'email') {
+      setUser({ ...user, email: e.target.value.toLowerCase() });
+    } else {
+      setUser({ ...user, [e.target.name]: e.target.value });
+    }
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();
     if (name === '' || email === '' || password === '') {
       setAlert('Please enter all fields', 'danger');
+    } else if (!picture.length) {
+      setAlert('Please choose profile image', 'danger');
     } else if (password !== password2) {
       setAlert('Passwords do not match', 'danger');
     } else {
@@ -110,6 +118,7 @@ const Register = (props) => {
             onChange={onDrop}
             imgExtension={['.jpg', '.png', '.gif']}
             maxFileSize={5242880}
+            singleImage={true}
           />
         </div>
         <input
@@ -128,7 +137,7 @@ const Register = (props) => {
       <div className="or-container">
         <p className="or">Already have an account?</p>
       </div>
-      <Link to="/register">
+      <Link to="/login">
         <button className="btn btn-primary btn-block">Login</button>
       </Link>
     </div>

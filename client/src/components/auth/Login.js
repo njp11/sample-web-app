@@ -28,7 +28,13 @@ const Login = (props) => {
 
   const { email, password } = user;
 
-  const onChange = (e) => setUser({ ...user, [e.target.name]: e.target.value });
+  const onChange = (e) => {
+    if (e.target.name === 'email') {
+      setUser({ ...user, email: e.target.value.toLowerCase() });
+    } else {
+      setUser({ ...user, [e.target.name]: e.target.value });
+    }
+  };
 
   const onSubmit = (e) => {
     e.preventDefault();

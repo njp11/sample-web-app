@@ -17,15 +17,15 @@ module.exports = {
     const { name, email, password } = req.body;
     aws.config.setPromisesDependency();
     aws.config.update({
-      secretAccessKey: config.get('secretAccessKey'),
-      accessKeyId: config.get('accessKeyId'),
-      region: config.get('region'),
+      secretAccessKey: process.env.secretAccessKey,
+      accessKeyId: process.env.accessKeyId,
+      region: process.env.region,
     });
     const s3 = new aws.S3();
     const id = uuid();
     var params = {
       ACL: 'public-read',
-      Bucket: config.get('bucket'),
+      Bucket: process.env.bucket,
       Body: fs.createReadStream(req.file.path),
       Key: `${id}${req.file.originalname}`,
     };

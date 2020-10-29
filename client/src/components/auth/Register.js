@@ -29,6 +29,10 @@ const Register = (props) => {
       setAlert(error, 'danger');
       clearErrors();
     }
+    if (error === 'Please include a valid email') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
     // eslint-disable-next-line
   }, [error, isAuthenticated, props.history]);
 

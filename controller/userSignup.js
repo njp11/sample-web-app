@@ -12,7 +12,8 @@ module.exports = {
   signup(req, res) {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      fs.unlinkSync(req.file.path); // Empty temp folder
+      return res.status(400).json({ msg: errors.errors[0].msg });
     }
     const { name, email, password } = req.body;
     aws.config.setPromisesDependency();

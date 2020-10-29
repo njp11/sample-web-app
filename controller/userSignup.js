@@ -8,13 +8,20 @@ const User = require('../models/User');
 const { validationResult } = require('express-validator');
 
 module.exports = {
-  signup(req, res) {
+  signup: async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       fs.unlinkSync(req.file.path); // Empty temp folder
       return res.status(400).json({ msg: errors.errors[0].msg });
     }
     const { name, email, password } = req.body;
+
+    let user = await User.findOne({ email });
+    if (user) {
+      fs.unlinkSync(req.file.path); // Empty temp folder
+      return res.status(400).json({ msg: 'User already exists' });
+    }
+
     aws.config.setPromisesDependency();
     aws.config.update({
       secretAccessKey: process.env.secretAccessKey,
@@ -38,11 +45,6 @@ module.exports = {
         fs.unlinkSync(req.file.path); // Empty temp folder
         const locationUrl = data.Location;
         try {
-          let user = await User.findOne({ email });
-
-          if (user) {
-            return res.status(400).json({ msg: 'User already exists' });
-          }
           user = new User({
             name,
             email,
@@ -64,7 +66,7 @@ module.exports = {
 
           jwt.sign(
             payload,
-            config.get('jwtSecret'),
+            process.env.jwtSecret,
             {
               expiresIn: 360000,
             },

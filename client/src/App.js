@@ -12,6 +12,7 @@ import AuthState from './context/auth/AuthState';
 import AlertState from './context/alert/AlertState';
 import setAuthToken from './utils/setAuthToken';
 
+// setting token in headers
 if (localStorage.token) {
   setAuthToken(localStorage.token);
 }

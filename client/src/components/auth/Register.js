@@ -33,6 +33,10 @@ const Register = (props) => {
       setAlert(error, 'danger');
       clearErrors();
     }
+    if (error === 'Please enter a password with 8 or more characters') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
     // eslint-disable-next-line
   }, [error, isAuthenticated, props.history]);
 

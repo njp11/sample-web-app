@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const config = require('config');
 const auth = require('../middleware/auth');
 const { check, validationResult } = require('express-validator');
 const User = require('../models/User');
@@ -32,7 +31,7 @@ router.post(
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.status(400).json({ msg: errors.errors[0].msg });
     }
 
     const { email, password } = req.body;
@@ -58,7 +57,7 @@ router.post(
 
       jwt.sign(
         payload,
-        config.get('jwtSecret'),
+        process.env.jwtSecret,
         {
           expiresIn: 360000,
         },

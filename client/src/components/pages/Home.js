@@ -16,7 +16,7 @@ const Home = () => {
       </div>
       {user && (
         <div className="card">
-          <img src={user && user.avatar} alt="Avatar" />
+          <img className="profile-img" src={user && user.avatar} alt="Avatar" />
         </div>
       )}
     </>

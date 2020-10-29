@@ -1,4 +1,3 @@
-// import { userModel as Users } from '../models';
 const aws = require('aws-sdk');
 const fs = require('fs');
 const config = require('config');
@@ -30,12 +29,11 @@ module.exports = {
       Body: fs.createReadStream(req.file.path),
       Key: `${id}${req.file.originalname}`,
     };
-
+    // Uploading image to s3
     s3.upload(params, async (err, data) => {
       if (err) {
         console.log('Error occured while trying to upload to S3 bucket', err);
       }
-
       if (data) {
         fs.unlinkSync(req.file.path); // Empty temp folder
         const locationUrl = data.Location;
